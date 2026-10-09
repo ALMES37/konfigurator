@@ -1,0 +1,322 @@
+/* =========================================================
+   Объёмные сцены (опция «Анимации и 3D»).
+   SVG-слои в CSS-перспективе: слой ближе к зрителю сильнее смещается при наклоне.
+   Анимируются только transform и opacity — плавно и без нагрузки на телефон.
+   ========================================================= */
+@property --paint { syntax: "<color>"; inherits: true; initial-value: #16171b; }
+
+.s-3d {
+  position: relative; container-type: size; overflow: hidden; isolation: isolate;
+  aspect-ratio: 1; border-radius: var(--r);
+  background:
+    radial-gradient(55% 48% at 50% 46%, color-mix(in srgb, var(--acc) 22%, var(--bg2)) 0%, transparent 72%),
+    linear-gradient(180deg, var(--bg2), color-mix(in srgb, var(--bg2) 86%, var(--fg)));
+  cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  transition: --paint .7s ease;
+}
+.p3d { position: absolute; left: 50%; top: 50%; width: min(100cqw, 100cqh); aspect-ratio: 1; transform: translate(-50%, -50%); perspective: 160cqmin; pointer-events: none; }
+.p3d__in, .p3d__sw { position: absolute; inset: 0; transform-style: preserve-3d; }
+.p3d__in { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .7s cubic-bezier(.2, .7, .3, 1); }
+.p3d__sw { animation: p3d-sway 9s ease-in-out infinite; }
+@keyframes p3d-sway {
+  0%, 100% { transform: rotateY(-9deg) rotateX(4deg); }
+  50% { transform: rotateY(9deg) rotateX(-2deg) translateY(-1.2%); }
+}
+.p3d .l { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform: translateZ(calc(var(--z) * .14cqmin)); }
+/* у анимированных деталей точка поворота считается от самой детали */
+.tw, .sh-bob, .sh-toss, .bl, .bl__conf rect, .lid, .bean, .bag, .paint-band, .car__body, .cap-toss,
+.ufo, .byte, .hrt, .petals ellipse, .smoke circle, .sun { transform-box: fill-box; }
+
+/* сцена не видна (пролистали или устройство неактивное) — всё стоит на паузе */
+.s-3d.is-paused *, .pos:not(.is-active) .s-3d * { animation-play-state: paused !important; }
+
+/* подсказка и кнопки поверх сцены */
+.s3d-hint {
+  position: absolute; left: 50%; bottom: 4cqmin; transform: translateX(-50%); z-index: 2;
+  padding: .45em 1em; border-radius: 99px; white-space: nowrap; pointer-events: none;
+  font-size: clamp(9px, 3.3cqmin, 13px); font-weight: 600; letter-spacing: 0; text-transform: none;
+  color: var(--fg); background: color-mix(in srgb, var(--bg) 78%, transparent); box-shadow: inset 0 0 0 1px var(--line);
+  transition: opacity .5s;
+}
+.s-3d.is-touched .s3d-hint { opacity: 0; }
+
+/* кузов — внизу по центру, цвета — в правом верхнем углу */
+.s3d-car { position: absolute; inset: 0; z-index: 2; pointer-events: none; font-size: clamp(9px, 3.4cqmin, 14px); line-height: 1.15; text-transform: none; letter-spacing: 0; }
+.s3d-car > * { pointer-events: auto; }
+.s3d-car__nav { position: absolute; left: 50%; bottom: 3.5cqmin; transform: translateX(-50%); }
+.s3d-paints { position: absolute; right: 3.5cqmin; top: 3.5cqmin; }
+.s3d-car__nav, .s3d-paints {
+  display: flex; align-items: center; gap: .5em; padding: .3em; border-radius: 99px;
+  background: color-mix(in srgb, var(--bg) 80%, transparent); box-shadow: inset 0 0 0 1px var(--line);
+}
+.s3d-paints { padding: .4em .8em .4em .45em; }
+.s3d-btn {
+  width: 2.3em; height: 2.3em; border-radius: 50%; border: 0; display: grid; place-items: center; padding: 0 0 .12em;
+  font: 600 1.2em/1 Inter, sans-serif; background: var(--fg); color: var(--bg); cursor: pointer; transition: transform .15s;
+}
+.s3d-btn:active { transform: scale(.9); }
+.s3d-car__name { display: grid; text-align: center; min-width: 6.6em; }
+.s3d-car__name b { font-weight: 700; }
+.s3d-car__name small { color: var(--muted); font-size: .8em; }
+.s3d-dot {
+  width: 1.7em; height: 1.7em; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: var(--c);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .25), 0 0 0 0 var(--bg), 0 0 0 0 var(--fg);
+  transition: box-shadow .25s, transform .2s;
+}
+.s3d-dot:active { transform: scale(.88); }
+.s3d-dot.on { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .25), 0 0 0 2px var(--bg), 0 0 0 3.5px var(--fg); }
+.s3d-paint__name { font-weight: 600; margin-left: .25em; min-width: 4.6em; }
+
+/* общее движение */
+.tw { transform-origin: center; animation: tw 2.6s ease-in-out infinite; animation-delay: calc(var(--d, 0) * .65s); }
+@keyframes tw { 0%, 100% { transform: scale(.35); opacity: .15; } 50% { transform: scale(1); opacity: 1; } }
+.bob { animation: bob 4s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-8px); } }
+.sh-bob { transform-origin: center; animation: sh-bob 4s ease-in-out infinite; }
+@keyframes sh-bob { 50% { transform: scale(.88); opacity: .75; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-r { to { transform: rotate(-360deg); } }
+
+/* ---------- кофейня: кружка ---------- */
+.s-3d[data-scene="coffee"] {
+  --m: color-mix(in srgb, var(--acc) 82%, #fff);
+  --m-l: color-mix(in srgb, var(--m) 50%, #fff);
+  --m-d: color-mix(in srgb, var(--m) 64%, #000);
+}
+.mug__body {
+  position: absolute; left: 31%; top: 41%; width: 38%; height: 34%; z-index: 1; overflow: hidden;
+  border-radius: 0 0 40% 40% / 0 0 22% 22%;
+  background: linear-gradient(90deg, var(--m-d) 0%, var(--m) 16%, var(--m-l) 30%, var(--m) 50%, color-mix(in srgb, var(--m) 84%, #000) 80%, var(--m-d) 100%);
+}
+.mug__body::after { content: ""; position: absolute; inset: 0; background: radial-gradient(130% 55% at 50% 112%, rgba(0, 0, 0, .3), transparent 62%); }
+.mug__top { position: absolute; left: 31%; top: 36.6%; width: 38%; height: 9%; z-index: 3; border-radius: 50%; background: linear-gradient(180deg, var(--m-l), var(--m)); }
+.mug__cof {
+  position: absolute; inset: 11% 5% 9%; border-radius: 50%; overflow: hidden; display: grid; place-items: center;
+  background: radial-gradient(60% 70% at 42% 40%, #8b5b3c, #4a2b1a 65%, #2b170c);
+}
+.mug__cof svg { width: 24%; transform: scaleY(.55); }
+.mug__rot { position: absolute; left: 22%; top: 47%; width: 56%; height: 22%; animation: mug-turn 7s ease-in-out infinite; }
+.mug__rot--back { z-index: 0; }
+.mug__rot--front { z-index: 2; }
+.mug__h { position: absolute; right: 0; top: 0; width: 17%; height: 100%; }
+.mug__h svg { display: block; width: 100%; height: 100%; }
+.mug__rot--back .mug__h { animation: mug-back 7s linear infinite; }
+.mug__rot--front .mug__h { animation: mug-front 7s linear infinite; }
+@keyframes mug-turn { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
+@keyframes mug-back { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes mug-front { 0%, 49.9% { opacity: 0; } 50%, 100% { opacity: 1; } }
+/* надпись на боку проплывает, пока ручка за кружкой */
+.mug__pr { position: absolute; inset: 0; display: grid; place-items: center; animation: mug-pr 7s infinite; }
+.mug__pr span { display: block; font: var(--hw, 700) 9cqmin/1 var(--head); text-transform: var(--hcase); color: var(--m-d); animation: mug-pr-s 7s infinite; }
+@keyframes mug-pr {
+  0% { transform: translateX(-46%); animation-timing-function: cubic-bezier(.37, 0, .63, 1); }
+  50%, 100% { transform: translateX(46%); }
+}
+@keyframes mug-pr-s {
+  0% { transform: scaleX(.05); opacity: 0; animation-timing-function: cubic-bezier(.33, 1, .68, 1); }
+  10% { opacity: .9; }
+  25% { transform: scaleX(1); animation-timing-function: cubic-bezier(.32, 0, .67, 0); }
+  40% { opacity: .9; }
+  50%, 100% { transform: scaleX(.05); opacity: 0; }
+}
+.steam i {
+  position: absolute; top: 13%; width: 9%; height: 26%; border-radius: 50%; opacity: 0;
+  background: radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--muted) 60%, transparent), transparent 72%);
+  animation: steam 3.6s ease-out infinite;
+}
+.steam i:nth-child(1) { left: 40%; }
+.steam i:nth-child(2) { left: 46%; animation-delay: 1.2s; }
+.steam i:nth-child(3) { left: 52%; animation-delay: 2.4s; }
+@keyframes steam {
+  0% { transform: translateY(30%) scale(.5, .7); opacity: 0; }
+  25% { opacity: .9; }
+  100% { transform: translate(18%, -55%) scale(1.25, 1.15); opacity: 0; }
+}
+.is-poke .mug__cof svg { animation: heart-pop .7s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes heart-pop { 40% { transform: scaleY(.55) scale(1.5); } }
+.is-poke .steam { animation: steam-burst 1.1s ease-out; }
+@keyframes steam-burst { 40% { transform: translateZ(calc(var(--z) * .14cqmin)) scale(1.35); } }
+
+/* ---------- барбершоп ---------- */
+.pole-run { animation: pole-run 2.2s linear infinite; }
+@keyframes pole-run { to { transform: translateY(-60px); } }
+
+/* ---------- автосервис ---------- */
+.g-big, .g-big-s { animation: spin 10s linear infinite; }
+.g-small, .g-small-s { animation: spin-r calc(10s * 9 / 14) linear infinite; }
+
+/* ---------- детейлинг: машина въезжает и уезжает ---------- */
+.car--in-l { animation: car-in-l .95s cubic-bezier(.15, .65, .3, 1) .22s both; }
+.car--in-r { animation: car-in-r .95s cubic-bezier(.15, .65, .3, 1) .22s both; }
+.car--out-r { animation: car-out-r .6s cubic-bezier(.6, 0, .9, .5) both; }
+.car--out-l { animation: car-out-l .6s cubic-bezier(.6, 0, .9, .5) both; }
+@keyframes car-in-l { from { transform: translateX(-430px); } }
+@keyframes car-in-r { from { transform: translateX(430px); } }
+@keyframes car-out-r { to { transform: translateX(440px); } }
+@keyframes car-out-l { to { transform: translateX(-440px); } }
+.car--in-l .wh { animation: wh-in-l .95s cubic-bezier(.15, .65, .3, 1) .22s both; }
+.car--in-r .wh { animation: wh-in-r .95s cubic-bezier(.15, .65, .3, 1) .22s both; }
+.car--out-r .wh { animation: wh-out-r .6s cubic-bezier(.6, 0, .9, .5) both; }
+.car--out-l .wh { animation: wh-out-l .6s cubic-bezier(.6, 0, .9, .5) both; }
+@keyframes wh-in-l { from { transform: rotate(-980deg); } }
+@keyframes wh-in-r { from { transform: rotate(980deg); } }
+@keyframes wh-out-r { to { transform: rotate(1000deg); } }
+@keyframes wh-out-l { to { transform: rotate(-1000deg); } }
+.car--in .car__body { transform-origin: 50% 100%; animation: car-settle .95s ease .22s both; }
+@keyframes car-settle { 0%, 72% { transform: none; } 84% { transform: translateY(2.5px) rotate(.5deg); } 100% { transform: none; } }
+.car__shine { animation: shine 6s ease-in-out 1.2s infinite; }
+@keyframes shine { 0%, 55% { transform: translateX(0); } 100% { transform: translateX(560px); } }
+.is-poke .car__shine-now { animation: shine-now 1s ease-in-out; }
+@keyframes shine-now { from { transform: translateX(0); } to { transform: translateX(560px); } }
+.is-poke .car__head { animation: head-flash .9s ease-out; }
+@keyframes head-flash { 15%, 45% { opacity: .35; } 30%, 60% { opacity: 1; } }
+
+/* ---------- салон красоты ---------- */
+.lip-up { animation: lip-up 5s ease-in-out infinite; }
+@keyframes lip-up { 0%, 100% { transform: translateY(20px); } 50% { transform: translateY(0); } }
+
+/* ---------- стоматология ---------- */
+.sweep { transform: translateX(-40px); }
+.is-poke .sweep { animation: sweep .9s ease-in-out; }
+@keyframes sweep { from { transform: translateX(-40px); } to { transform: translateX(300px); } }
+
+/* ---------- фитнес ---------- */
+.kb { animation: kb-sway 4.5s ease-in-out infinite; }
+@keyframes kb-sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.is-poke .kb-kick { animation: kb-kick 1.4s ease-out; }
+@keyframes kb-kick { 18% { transform: rotate(18deg); } 42% { transform: rotate(-13deg); } 64% { transform: rotate(7deg); } 84% { transform: rotate(-3deg); } }
+
+/* ---------- ремонт ---------- */
+.br { animation: br-drop .6s cubic-bezier(.3, 1.5, .6, 1) both; animation-delay: calc(var(--i) * 70ms + .1s); }
+.is-poke .br { animation-name: br-drop2; }
+@keyframes br-drop { from { transform: translateY(-230px); opacity: 0; } 30% { opacity: 1; } }
+@keyframes br-drop2 { from { transform: translateY(-230px); opacity: 0; } 30% { opacity: 1; } }
+.paint-band { transform-origin: left center; animation: paint 5s ease-in-out 1.2s infinite both; }
+@keyframes paint { 0%, 8% { transform: scaleX(0); opacity: .92; } 60%, 86% { transform: scaleX(1); opacity: .92; } 100% { transform: scaleX(1); opacity: 0; } }
+.roller { animation: roller 5s ease-in-out 1.2s infinite both; }
+@keyframes roller {
+  0% { transform: translateX(-98px); opacity: 0; } 8% { transform: translateX(-98px); opacity: 1; }
+  60%, 86% { transform: translateX(46px); opacity: 1; } 100% { transform: translateX(46px); opacity: 0; }
+}
+
+/* ---------- недвижимость ---------- */
+.s-3d.is-lit .wins polygon { fill: #ffd36b !important; }
+.wins polygon { transition: fill .5s; }
+.smoke circle { transform-origin: center; opacity: 0; animation: smoke 3.6s ease-out infinite; animation-delay: calc(var(--d) * 1.2s); }
+@keyframes smoke { 0% { transform: translate(0, 0) scale(.4); opacity: 0; } 20% { opacity: .8; } 100% { transform: translate(16px, -64px) scale(1.7); opacity: 0; } }
+.tree { animation: tree 5s ease-in-out infinite; }
+@keyframes tree { 50% { transform: rotate(2.5deg); } }
+.cloud { animation: cloud 20s linear infinite; }
+@keyframes cloud { 0% { transform: translateX(-60px); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(260px); opacity: 0; } }
+
+/* ---------- доставка еды ---------- */
+.lay { animation: lay-drop .7s cubic-bezier(.3, 1.4, .6, 1) both; animation-delay: calc(var(--i) * 110ms + .1s); }
+.is-poke .lay { animation-name: lay-drop2; }
+@keyframes lay-drop { from { transform: translateY(-210px); opacity: 0; } 40% { opacity: 1; } }
+@keyframes lay-drop2 { from { transform: translateY(-210px); opacity: 0; } 40% { opacity: 1; } }
+
+/* ---------- детские праздники ---------- */
+.bl { transform-origin: 50% 100%; animation: bl-bob 4s ease-in-out infinite; animation-delay: calc(var(--i) * -1.1s); }
+@keyframes bl-bob { 50% { transform: translateY(-8px) rotate(1.5deg); } }
+.bl.is-pop .bl__b { animation: bl-pop 1.8s ease-out both; }
+@keyframes bl-pop {
+  0% { transform: scale(1); } 8% { transform: scale(1.16); opacity: 1; } 12% { transform: scale(1.3); opacity: 0; }
+  60% { transform: scale(.2); opacity: 0; } 100% { transform: scale(1); opacity: 1; }
+}
+.bl__conf rect { transform-origin: center; opacity: 0; }
+.bl.is-pop .bl__conf rect { animation: conf .8s ease-out .12s both; }
+@keyframes conf { 0% { transform: rotate(var(--a)) translateY(0); opacity: 1; } 100% { transform: rotate(var(--a)) translateY(-64px); opacity: 0; } }
+
+/* ---------- фотограф ---------- */
+.lens-glint { animation: spin 14s linear infinite; }
+.flash { background: #fff; opacity: 0; }
+.is-poke .flash { animation: flash .55s ease-out; }
+@keyframes flash { 12% { opacity: .9; } 100% { opacity: 0; } }
+
+/* ---------- онлайн-школа ---------- */
+.cap { animation: bob 4s ease-in-out infinite; }
+.tassel { animation: tassel 3s ease-in-out infinite; }
+@keyframes tassel { 50% { transform: rotate(-6deg); } }
+.cap-toss { transform-origin: center; }
+.is-poke .cap-toss { animation: toss 1.3s cubic-bezier(.3, .6, .4, 1); }
+@keyframes toss {
+  45% { transform: translateY(-120px) rotate(-200deg); animation-timing-function: cubic-bezier(.6, 0, .9, .5); }
+  76% { transform: translateY(0) rotate(-360deg); } 86% { transform: translateY(-10px) rotate(-360deg); } 100% { transform: rotate(-360deg); }
+}
+.sh-toss { transform-origin: center; }
+.is-poke .sh-toss { animation: sh-toss 1.3s; }
+@keyframes sh-toss { 45% { transform: scale(.45); opacity: .4; } }
+
+/* ---------- цветы ---------- */
+.bq { animation: bq 6s ease-in-out infinite; }
+@keyframes bq { 50% { transform: rotate(2deg); } }
+.tl { animation: tl 4s ease-in-out infinite; animation-delay: calc(var(--i) * -.8s); }
+@keyframes tl { 50% { transform: rotate(-3deg); } }
+.petals ellipse { transform-origin: center; opacity: 0; }
+.is-poke .petals ellipse { animation: petal 1.8s ease-in both; animation-delay: calc(var(--i) * .12s); }
+@keyframes petal { 10% { opacity: 1; } 100% { opacity: 0; transform: translate(30px, 210px) rotate(260deg); } }
+
+/* ---------- турагентство ---------- */
+.sun { transform-origin: center; animation: sun 5s ease-in-out infinite; }
+@keyframes sun { 50% { transform: scale(1.07); } }
+.waves path { animation: wave 3s ease-in-out infinite; animation-delay: calc(var(--i) * -1s); }
+@keyframes wave { 50% { transform: translateX(14px); opacity: .35; } }
+.palm { animation: palm 5s ease-in-out infinite; }
+@keyframes palm { 50% { transform: rotate(-2.5deg); } }
+.boat { opacity: 0; }
+.is-poke .boat { animation: boat 4s ease-in-out both; }
+@keyframes boat { 0% { transform: translateX(0); opacity: 0; } 10%, 86% { opacity: 1; } 100% { transform: translateX(300px); opacity: 0; } }
+
+/* ---------- ветклиника ---------- */
+.paw { animation: bob 3.8s ease-in-out infinite; }
+.is-poke .paw-sq { animation: squish .6s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes squish { 30% { transform: scale(1.06, .9); } }
+.hrt { transform-origin: center; opacity: 0; }
+.is-poke .hrt { animation: hrt 1.4s ease-out both; animation-delay: calc(var(--i) * .12s); }
+@keyframes hrt { 0% { opacity: 0; transform: translateY(20px) scale(.5); } 25% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0; transform: translateY(-70px) scale(.9); } }
+
+/* ---------- IT-стартап ---------- */
+.ufo { transform-origin: center; animation: ufo 4s ease-in-out infinite; }
+@keyframes ufo { 50% { transform: translateY(-10px) rotate(-1.5deg); } }
+.ufo-l { animation: blink 1.4s ease-in-out infinite; animation-delay: calc(var(--i) * .2s); opacity: .3; }
+@keyframes blink { 40% { opacity: 1; } 80% { opacity: .3; } }
+.beam, .beam-glow { animation: beam 3s ease-in-out infinite; }
+@keyframes beam { 0%, 100% { opacity: .45; } 50% { opacity: .85; } }
+.byte { transform-origin: center; opacity: 0; }
+.is-poke .byte { animation: byte 1.6s ease-in-out both; }
+@keyframes byte { 15% { opacity: 1; } 85% { opacity: 1; transform: translateY(-110px) rotate(20deg); } 100% { opacity: 0; transform: translateY(-120px) rotate(20deg); } }
+
+/* ---------- товары кофейни: крышка открывается ---------- */
+.lid { transform-origin: 0% 100%; }
+.is-open .lid { animation: lid-open 1s cubic-bezier(.3, 1.3, .5, 1) .35s both; }
+@keyframes lid-open { to { transform: translate(-64px, -46px) rotate(-26deg); } }
+.bean { transform-origin: center; opacity: 0; }
+.is-open .bean { animation: bean 1.1s cubic-bezier(.3, .6, .4, 1) both; animation-delay: calc(.75s + var(--i) * 70ms); }
+@keyframes bean {
+  0% { opacity: 0; transform: translateY(10px); } 15% { opacity: 1; }
+  45% { transform: translate(calc(var(--tx) * .55), -120px) rotate(calc(var(--r) * .5)); }
+  100% { opacity: 1; transform: translate(var(--tx), var(--ty)) rotate(var(--r)); }
+}
+.aroma path { opacity: 0; }
+.is-open .aroma path { animation: aroma 2.6s ease-out 1.2s infinite; }
+.is-open .aroma path:last-child { animation-delay: 1.9s; }
+@keyframes aroma { 0% { opacity: 0; transform: translateY(10px); } 30% { opacity: .7; } 100% { opacity: 0; transform: translateY(-34px); } }
+.is-open .flap--l { animation: flap-l .7s cubic-bezier(.3, 1.3, .5, 1) .35s both; }
+.is-open .flap--r { animation: flap-r .7s cubic-bezier(.3, 1.3, .5, 1) .45s both; }
+@keyframes flap-l { to { transform: rotate(-150deg); } }
+@keyframes flap-r { to { transform: rotate(150deg); } }
+.bag { transform-origin: 50% 100%; transform: translateY(50px); }
+.is-open .bag { animation: bag-up .8s cubic-bezier(.3, 1.4, .5, 1) both; animation-delay: calc(.8s + var(--i) * 120ms); }
+@keyframes bag-up { from { transform: translateY(50px); } to { transform: translateY(-6px) rotate(calc((var(--i) - 1) * 8deg)); } }
+.is-open .cup-lid { animation: cup-lid .7s cubic-bezier(.3, 1.4, .5, 1) .35s both; }
+@keyframes cup-lid { to { transform: translate(6px, -16px) rotate(28deg); } }
+
+/* мини-товары в сетке магазина: без покачивания, только картинка */
+.s-3d--mini { position: absolute; inset: 0; border-radius: inherit; aspect-ratio: auto; background: none; cursor: pointer; }
+.s-3d--mini .p3d__sw { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .s-3d *, .s-3d .p3d__sw { animation: none !important; }
+  .s-3d .bean, .s-3d .bag { opacity: 1; }
+}

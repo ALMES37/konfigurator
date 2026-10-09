@@ -18,7 +18,7 @@ CFG.NICHES = {
     notify: "Анна: столик на четверых, суббота, 11:00",
   },
   barber: {
-    emoji: "💈", title: "Барбершоп", name: "Борода",
+    emoji: "✂️", title: "Барбершоп", name: "Борода",
     kicker: "Мужские стрижки и бороды",
     lead: "Стрижём так, что вопрос «где стригся?» будут задавать всю неделю.",
     cta: "Записаться", nav: ["Услуги", "Мастера", "Контакты"], hServices: "Услуги и цены",
@@ -31,7 +31,7 @@ CFG.NICHES = {
     notify: "Тимур: стрижка + борода, пятница, 19:00",
   },
   auto: {
-    emoji: "🔧", title: "Автосервис", name: "Гараж 37",
+    emoji: "⚙️", title: "Автосервис", name: "Гараж 37",
     kicker: "Ремонт и обслуживание авто",
     lead: "Сначала честно скажем, что сломалось и сколько это стоит. Потом чиним.",
     cta: "Записаться на диагностику", nav: ["Услуги", "Цены", "Контакты"], hServices: "Услуги и цены",
@@ -44,7 +44,7 @@ CFG.NICHES = {
     notify: "Сергей: стук в подвеске, диагностика завтра утром",
   },
   detailing: {
-    emoji: "🚘", title: "Детейлинг", name: "Глянец",
+    emoji: "🚗", title: "Детейлинг", name: "Глянец",
     kicker: "Детейлинг-студия",
     lead: "Керамика, плёнка и химчистка салона. Машина уезжает от нас дороже на вид, чем приехала из салона.",
     cta: "Рассчитать стоимость", nav: ["Услуги", "Работы", "Цены"], hServices: "Услуги и цены",
@@ -57,7 +57,7 @@ CFG.NICHES = {
     notify: "Артур: керамика на Camry, хочет в субботу",
   },
   beauty: {
-    emoji: "💅", title: "Салон красоты", name: "Лак",
+    emoji: "💋", title: "Салон красоты", name: "Лак",
     kicker: "Маникюр, педикюр, брови",
     lead: "Маникюр, который держится три недели. И час, когда можно ни о чём не думать.",
     cta: "Записаться к мастеру", nav: ["Услуги", "Мастера", "Запись"], hServices: "Услуги и цены",
@@ -70,7 +70,7 @@ CFG.NICHES = {
     notify: "Алина: маникюр с покрытием, четверг, 15:30",
   },
   dental: {
-    emoji: "🦷", title: "Стоматология", name: "Улыбка",
+    emoji: "😬", title: "Стоматология", name: "Улыбка",
     kicker: "Стоматология без страха",
     lead: "Лечим так, что вы перестанете откладывать визит к стоматологу. Без боли и без сюрпризов в чеке.",
     cta: "Записаться на консультацию", nav: ["Услуги", "Врачи", "Цены"], hServices: "Услуги и цены",
@@ -83,7 +83,7 @@ CFG.NICHES = {
     notify: "Мария: болит зуб, хочет попасть сегодня",
   },
   fitness: {
-    emoji: "🏋️", title: "Фитнес-студия", name: "Сила",
+    emoji: "💪", title: "Фитнес-студия", name: "Сила",
     kicker: "Студия силового тренинга",
     lead: "Группы до 6 человек и тренер, который помнит, сколько вы жали в прошлый раз.",
     cta: "Записаться на пробную", nav: ["Тренировки", "Тренеры", "Цены"], hServices: "Цены",
@@ -109,7 +109,7 @@ CFG.NICHES = {
     notify: "Елена: двушка 54 м², нужен замер в субботу",
   },
   realty: {
-    emoji: "🏡", title: "Недвижимость", name: "Ключ",
+    emoji: "🏠", title: "Недвижимость", name: "Ключ",
     kicker: "Агентство недвижимости",
     lead: "Найдём квартиру за 14 дней или вернём комиссию. Каждую сделку проверяет юрист.",
     cta: "Подобрать квартиру", nav: ["Объекты", "Услуги", "Контакты"], hServices: "Услуги",
@@ -122,7 +122,7 @@ CFG.NICHES = {
     notify: "Ольга: двушка до 9 млн рядом с метро",
   },
   food: {
-    emoji: "🍕", title: "Доставка еды", name: "Печь",
+    emoji: "🍔", title: "Доставка еды", name: "Печь",
     kicker: "Неаполитанская пицца с доставкой",
     lead: "Печь на 450 градусов и тесто, которое зреет 48 часов. Привезём горячей за 40 минут.",
     cta: "Заказать пиццу", nav: ["Меню", "Доставка", "Акции"], hServices: "Меню",
@@ -148,7 +148,7 @@ CFG.NICHES = {
     notify: "Юля: сыну 7 лет, Человек-паук, 14 марта",
   },
   photo: {
-    emoji: "📸", title: "Фотограф", name: "Кадр",
+    emoji: "📷", title: "Фотограф", name: "Кадр",
     kicker: "Портреты, love story, свадьбы",
     lead: "Снимаю людей настоящими. Без «а теперь улыбаемся» — и с готовыми фото через 7 дней.",
     cta: "Забронировать дату", nav: ["Портфолио", "Услуги", "Отзывы"], hServices: "Съёмки",
@@ -187,7 +187,7 @@ CFG.NICHES = {
     notify: "Максим: пионы жене к 18:00, с открыткой",
   },
   travel: {
-    emoji: "🏝️", title: "Турагентство", name: "Лагуна",
+    emoji: "🌊", title: "Турагентство", name: "Лагуна",
     kicker: "Туры к морю и не только",
     lead: "Подберём тур за вечер. Расскажем, где правда красиво, а где только на фото в рекламе.",
     cta: "Подобрать тур", nav: ["Направления", "Горящие туры", "Контакты"], hServices: "Направления",
@@ -213,7 +213,7 @@ CFG.NICHES = {
     notify: "Ира: кошка второй день не ест, сегодня вечером",
   },
   tech: {
-    emoji: "🚀", title: "IT-стартап", name: "Orbit",
+    emoji: "🛸", title: "IT-стартап", name: "Orbit",
     kicker: "CRM для малого бизнеса",
     lead: "CRM, которую не нужно учить. Подключите за 10 минут и забудьте про таблицы.",
     cta: "Попробовать бесплатно", nav: ["Продукт", "Тарифы", "Блог"], hServices: "Тарифы",
@@ -228,10 +228,10 @@ CFG.NICHES = {
 };
 
 CFG.MODELS = {
-  card:    { title: "Визитка", note: "Один экран: кто вы, чем полезны и как связаться.", days: 3, blocks: ["contacts", "form"] },
-  landing: { title: "Лендинг", note: "Всё на одной странице: 5–8 блоков, которые ведут к заявке.", days: 7, blocks: ["services", "gallery", "stats", "reviews", "contacts", "form"] },
-  shop:    { title: "Магазин", note: "Каталог, корзина и заказ прямо на сайте.", days: 14, blocks: ["services", "shop", "reviews", "faq", "contacts", "form"] },
-  big:     { title: "Большой сайт", note: "Разделы, команда, вопросы — для серьёзного бизнеса.", days: 21, blocks: ["services", "gallery", "stats", "reviews", "team", "faq", "contacts", "form"] },
+  card:    { title: "Визитка", note: "Один экран: кто вы, чем полезны и как связаться.", days: 3, max: 5, blocks: ["contacts", "form"] },
+  landing: { title: "Лендинг", note: "Всё на одной странице: 5–8 блоков, которые ведут к заявке.", days: 5, max: 10, blocks: ["services", "gallery", "stats", "reviews", "contacts", "form"] },
+  shop:    { title: "Магазин", note: "Каталог, корзина и заказ прямо на сайте.", days: 10, max: 18, blocks: ["services", "shop", "reviews", "faq", "contacts", "form"] },
+  big:     { title: "Большой сайт", note: "Разделы, команда, вопросы — для серьёзного бизнеса.", days: 14, max: 21, blocks: ["services", "gallery", "stats", "reviews", "team", "faq", "contacts", "form"] },
 };
 
 // Стили сайта-превью. v — переменные темы, layout — вид первого экрана.
@@ -284,9 +284,32 @@ CFG.BLOCKS = {
 
 CFG.OPTIONS = {
   tg:      { icon: "✈️", title: "Заявки в Telegram", note: "Заявка прилетает вам в телефон за секунду.", days: 1 },
-  booking: { icon: "🗓️", title: "Онлайн-запись", note: "Клиент сам выбирает день и время.", days: 2 },
-  pay:     { icon: "💳", title: "Оплата на сайте", note: "Карта и СБП прямо на странице.", days: 2 },
-  motion:  { icon: "✨", title: "Анимации и 3D", note: "Сайт оживает, когда его листают.", days: 3 },
+  booking: { icon: "⏳", title: "Онлайн-запись", note: "Клиент сам выбирает день и время.", days: 2 },
+  pay:     { icon: "🪙", title: "Оплата на сайте", note: "Карта и СБП прямо на странице.", days: 2 },
+  motion:  { icon: "✨", title: "Анимации и 3D", note: "Объёмная сцена под нишу, сайт оживает при прокрутке.", days: 3 },
   lang:    { icon: "🌍", title: "Английская версия", note: "Переключатель RU / EN в меню.", days: 2 },
   bot:     { icon: "🤖", title: "Правки через бота", note: "Цены и фото меняете сами, из Telegram.", days: 2 },
+};
+
+// Сборка под нишу: выбрали нишу — сразу подставляются модель, блоки, опции и подходящий стиль.
+// Дальше всё можно менять. Стиль подставляется, только пока его не выбирали вручную;
+// включённое «Анимации и 3D» при смене ниши остаётся как было.
+CFG.PRESETS = {
+  coffee:    { model: "shop",    theme: "premium", blocks: ["services", "shop", "gallery", "reviews", "contacts", "form"], opts: ["tg", "booking"] },
+  barber:    { model: "landing", theme: "brutal",  blocks: ["services", "gallery", "team", "reviews", "contacts", "form"], opts: ["tg", "booking"] },
+  auto:      { model: "landing", theme: "bold",    blocks: ["services", "stats", "reviews", "faq", "contacts", "form"], opts: ["tg", "booking"] },
+  detailing: { model: "landing", theme: "premium", blocks: ["services", "gallery", "reviews", "faq", "contacts", "form"], opts: ["tg", "booking"] },
+  beauty:    { model: "landing", theme: "pastel",  blocks: ["services", "gallery", "team", "reviews", "contacts", "form"], opts: ["tg", "booking"] },
+  dental:    { model: "big",     theme: "minimal", blocks: ["services", "stats", "team", "reviews", "faq", "contacts", "form"], opts: ["tg", "booking"] },
+  fitness:   { model: "landing", theme: "neon",    blocks: ["services", "gallery", "team", "stats", "reviews", "contacts", "form"], opts: ["tg", "booking", "pay"] },
+  repair:    { model: "landing", theme: "eco",     blocks: ["services", "gallery", "stats", "reviews", "faq", "contacts", "form"], opts: ["tg"] },
+  realty:    { model: "big",     theme: "minimal", blocks: ["services", "gallery", "stats", "team", "reviews", "faq", "contacts", "form"], opts: ["tg"] },
+  food:      { model: "shop",    theme: "bold",    blocks: ["services", "shop", "reviews", "faq", "contacts", "form"], opts: ["tg", "pay"] },
+  kids:      { model: "landing", theme: "pastel",  blocks: ["services", "gallery", "reviews", "faq", "contacts", "form"], opts: ["tg", "booking"] },
+  photo:     { model: "landing", theme: "brutal",  blocks: ["services", "gallery", "reviews", "contacts", "form"], opts: ["tg", "booking"] },
+  school:    { model: "big",     theme: "cozy",    blocks: ["services", "stats", "team", "reviews", "faq", "form"], opts: ["tg", "pay"] },
+  flowers:   { model: "shop",    theme: "pastel",  blocks: ["services", "shop", "gallery", "reviews", "contacts", "form"], opts: ["tg", "pay"] },
+  travel:    { model: "landing", theme: "minimal", blocks: ["services", "gallery", "stats", "reviews", "faq", "contacts", "form"], opts: ["tg"] },
+  pets:      { model: "landing", theme: "eco",     blocks: ["services", "team", "reviews", "faq", "contacts", "form"], opts: ["tg", "booking"] },
+  tech:      { model: "big",     theme: "neon",    blocks: ["services", "stats", "team", "reviews", "faq", "form"], opts: ["tg", "lang"] },
 };

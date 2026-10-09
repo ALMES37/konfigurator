@@ -219,12 +219,6 @@
 /* --- опция «Анимации и 3D» --- */
 .is-motion .s-hero figure img { animation: kb 16s ease-in-out infinite alternate; }
 @keyframes kb { from { transform: scale(1.02); } to { transform: scale(1.14) translate(-2%, -1%); } }
-.is-motion .s-hero::before {
-  content: ""; position: absolute; z-index: 1; width: 22cqi; aspect-ratio: 1; right: 8cqi; top: 6cqi; border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff, var(--acc) 45%, transparent 70%); filter: blur(.4cqi); opacity: .75;
-  animation: float 6s ease-in-out infinite; pointer-events: none;
-}
-@keyframes float { 50% { transform: translateY(-3cqi) scale(1.05); } }
 .is-motion .rv { opacity: 0; transform: translateY(4cqi); transition: opacity .9s var(--ease), transform .9s var(--ease); }
 .is-motion .rv.in { opacity: 1; transform: none; }
 
@@ -264,7 +258,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .is-motion .s-hero figure img, .is-motion .s-hero::before, .s-ping { animation: none; }
+  .is-motion .s-hero figure img, .s-ping { animation: none; }
   .is-motion .rv { opacity: 1; transform: none; }
 }
 
@@ -279,3 +273,41 @@
 .s-rev:hover, .s-item:hover, .s-person:hover { transform: translateY(-4px); }
 .s-row:hover { transform: translateX(6px); }
 @media (prefers-reduced-motion: reduce) { .s-in { animation: none; } .site img { opacity: 1; transform: none; } }
+
+/* эмодзи-картинки внутри сайта-превью не должны растягиваться и ждать «проявления» как фото */
+.site img.emo { width: 1em; height: 1em; opacity: 1; transform: none; object-fit: contain; display: inline-block; vertical-align: -.14em; }
+.s-item__pic .emo { width: 1em; height: 1em; }
+
+/* --- первый экран с объёмной сценой вместо фото (опция «Анимации и 3D») --- */
+.site .s-hero.has-3d {
+  display: grid; grid-template-columns: 1.05fr 1fr; gap: 4cqi; align-items: center;
+  min-height: 0; padding: 4.5cqi var(--pad) 6cqi; text-align: left;
+}
+.site .s-hero.has-3d .s-lead { margin: 0; }
+.site .s-hero.has-3d .s-cta { justify-content: flex-start; }
+.site.L-center .s-hero.has-3d { grid-template-columns: 1fr; text-align: center; }
+.site.L-center .s-hero.has-3d .s-lead { margin: 0 auto; }
+.site.L-center .s-hero.has-3d .s-cta { justify-content: center; }
+.site.L-center .s-hero.has-3d .s-3d { aspect-ratio: 16 / 9; }
+.s-hero.has-3d .s-3d { animation: s-rise .9s var(--ease) .3s both; }
+
+/* товары, которые открываются */
+.s-item__pic { position: relative; }
+.s-item__pic--3d { cursor: pointer; overflow: hidden; transition: box-shadow .25s; }
+.s-item.is-on .s-item__pic--3d { box-shadow: inset 0 0 0 2px var(--acc); }
+.s-prod {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3cqi; align-items: center; margin-bottom: 3cqi; padding: 2cqi;
+  border-radius: var(--r); background: var(--bg2); box-shadow: inset 0 0 0 1px var(--line);
+  animation: s-rise .6s var(--ease) both;
+}
+.s-prod__info { display: grid; gap: .45em; justify-items: start; }
+.s-prod__info small { color: var(--muted); }
+.s-prod__info b { font-family: var(--head); font-weight: var(--hw); letter-spacing: var(--ht); text-transform: var(--hcase); font-size: clamp(16px, 3cqi, 34px); line-height: 1.1; }
+.s-prod__info > span { color: var(--acc); font-weight: 700; font-size: 1.2em; }
+.s-prod__btns { display: flex; flex-wrap: wrap; gap: .6em; margin-top: .5em; }
+
+@container web (max-width: 520px) {
+  .site .s-hero.has-3d { grid-template-columns: 1fr; padding: 5cqi var(--pad) 8cqi; gap: 6cqi; }
+  .site.L-center .s-hero.has-3d .s-3d, .s-hero.has-3d .s-3d { aspect-ratio: 1 / .95; }
+  .s-prod { grid-template-columns: 1fr; padding: 4cqi; }
+}

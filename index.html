@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Конфигуратор сайта — ALMES37</title>
-<meta name="description" content="Соберите свой сайт как машину в конфигураторе — и сразу посмотрите, каким он будет на MacBook и iPhone.">
+<meta name="description" content="Соберите свой сайт как машину в конфигураторе — и сразу посмотрите, каким он будет на компьютере и телефоне.">
 <meta property="og:title" content="Конфигуратор сайта — ALMES37">
 <meta property="og:description" content="Соберите сайт как машину в конфигураторе и посмотрите его вживую.">
 <meta name="theme-color" content="#ffffff">
@@ -12,8 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@600;800&family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@500;700;800&family=Comfortaa:wght@600;700&family=Martian+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4">
-<link rel="stylesheet" href="css/site.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=12">
+<link rel="stylesheet" href="css/site.css?v=12">
+<link rel="stylesheet" href="css/props.css?v=2">
 </head>
 <body>
 
@@ -36,15 +37,15 @@
     <section class="intro">
       <p class="intro__new" id="introNew">Новинка</p>
       <h1 class="intro__title" id="introTitle">Соберите свой сайт.</h1>
-      <p class="intro__sub" id="introSub">Как машину в конфигураторе — и сразу посмотрите, каким он будет на MacBook и iPhone.</p>
+      <p class="intro__sub" id="introSub">Как машину в конфигураторе — и сразу посмотрите, каким он будет на компьютере и телефоне.</p>
     </section>
 
     <!-- Сцена с устройством -->
-    <div class="stage-col">
+    <div class="stage-col" id="stageCol">
       <div class="stage" id="stage">
         <div class="seg" role="radiogroup" aria-label="Устройство">
-          <button class="seg__btn is-on" role="radio" aria-checked="true" data-device="mac">MacBook</button>
-          <button class="seg__btn" role="radio" aria-checked="false" data-device="phone">iPhone</button>
+          <button class="seg__btn is-on" role="radio" aria-checked="true" data-device="mac"><svg viewBox="0 0 20 15" aria-hidden="true"><rect x="3" y="1" width="14" height="10" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M1 13.6h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Компьютер</button>
+          <button class="seg__btn" role="radio" aria-checked="false" data-device="phone"><svg viewBox="0 0 20 15" aria-hidden="true"><rect x="5.5" y=".9" width="9" height="13.2" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.8 3.3h2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Телефон</button>
           <span class="seg__thumb" aria-hidden="true"></span>
         </div>
 
@@ -113,7 +114,7 @@
                 <span class="status__r">
                   <svg viewBox="0 0 19 12" width="19" height="12"><rect x="0" y="8" width="3.2" height="4" rx="1" fill="currentColor"/><rect x="5.2" y="5.5" width="3.2" height="6.5" rx="1" fill="currentColor"/><rect x="10.4" y="3" width="3.2" height="9" rx="1" fill="currentColor"/><rect x="15.6" y="0" width="3.2" height="12" rx="1" fill="currentColor"/></svg>
                   <svg viewBox="0 0 17 12" width="17" height="12"><path d="M8.5 11.6 6 9.1a3.5 3.5 0 0 1 5 0ZM3.8 6.9l1.5 1.5a4.6 4.6 0 0 1 6.4 0l1.5-1.5a6.7 6.7 0 0 0-9.4 0ZM1.2 4.3l1.5 1.5a8.3 8.3 0 0 1 11.6 0l1.5-1.5a10.4 10.4 0 0 0-14.6 0Z" fill="currentColor"/></svg>
-                  <i class="batt batt--ios"><i></i><b data-batt>67</b></i>
+                  <i class="batt batt--ios"><i></i><b data-batt data-v="67">67</b></i>
                 </span>
               </div>
 
@@ -141,6 +142,8 @@
         </div>
 
         <p class="stage__hint" id="hint">Потяните за край, чтобы повернуть · листайте сайт внутри</p>
+        <button class="stage__open" id="openFull" type="button" aria-label="Открыть превью на весь экран"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M8.5 1.5h4v4M5.5 12.5h-4v-4M12.5 1.5 8 6M1.5 12.5 6 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="stage__close" id="closeFull" type="button" aria-label="Свернуть превью"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m2 2 10 10M12 2 2 12" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
       </div>
     </div>
 
@@ -210,10 +213,11 @@
 
 <footer class="foot">
   <p>Превью — пример. Настоящий сайт собирается под ваш бизнес: ваши тексты, фото и цены.</p>
-  <p>Сделано <a href="https://almes37.github.io/">ALMES37</a> · Фото — <a href="https://unsplash.com/">Unsplash</a></p>
+  <p>Сделано <a href="https://almes37.github.io/">ALMES37</a> · Фото — <a href="https://unsplash.com/">Unsplash</a> · Эмодзи — <a href="https://googlefonts.github.io/noto-emoji-animation/">Google Noto</a> (CC BY 4.0) и Apple</p>
 </footer>
 
-<script src="js/data.js?v=1"></script>
-<script src="js/app.js?v=4"></script>
+<script src="js/data.js?v=4"></script>
+<script src="js/props.js?v=2"></script>
+<script src="js/app.js?v=12"></script>
 </body>
 </html>
